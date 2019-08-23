@@ -8,6 +8,9 @@
 *.exe
 *.o
 *.so
+*.pyc
+*.iml
+*.xml
 
 # Packages #
 ############

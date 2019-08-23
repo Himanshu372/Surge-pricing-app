@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'app/content/site.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+
+{% block content %}
+    <body>
+    {#    <a href="/surge_price"></a>#}
+    <p class="app"></p>
+    <tr>
+        <td><label for="id_excel">Upload file and wait for magic</label></td>
+        {#            <td class="fileUpload btn" enctype="multipart/form-data">#}
+        {#                <input type="file" name="excel" id="id_excel" class="upload"/>#}
+        {#                <button type="submit" id='upload-btn'>Upload</button>#}
+        {#            </td>#}
+        <form enctype="multipart/form-data">
+            <input type="file" id="id_excel">
+            <input type="button" id="upload_button" value="Upload!">
+        </form>
+        <div class="loader" id="loader" style="display: none"></div>
+        <canvas id="line-chart" width="300" height="100"></canvas>
+    </tr>
+
+
+    </body>
+
+    <script>
+
+
+        $("#upload_button").click(function (event) {
+            event.preventDefault();
+            $("#loader").show();
+            var data = $("#id_excel").get(0).files[0];
+            {#var file = document.getElementById("id_excel").files[0];#}
+            {#data = new FormData($("#id_excel")[0]);#}
+            {#data.append('file', file);#}
+            console.log(data);
+            var action = function (data) {
+                new Chart(document.getElementById("line-chart"), data);
+                $("#loader").hide();
+            };
+            $.ajax({
+                type: "PUT",
+                url: "",
+                async: true,
+                headers: {
+                    'Content-Disposition': 'attachment; filename=data.xlsx',
+                    'Content-Type': 'multipart/form-data'
+                },
+                data: data,
+                contentType: false,
+                processData: false,
+                success: action,
+                error: action,
+            });
+        });
+
+        $('#loader').bind('ajaxStart', function () {
+            $(this).show();
+        }).bind('ajaxStop', function () {
+            $(this).hide();
+        });
+
+        {##}
+        {#        $("#button").click(function () {#}
+        {#            $.ajax({#}
+        {#                // Your server script to process the upload#}
+        {#                url: '',#}
+        {#                type: 'PUT',#}
+        {##}
+        {#                // Form data#}
+        {#                data: new FormData($('form')[0]),#}
+        {##}
+        {#                // Tell jQuery not to process data or worry about content-type#}
+        {#                // You *must* include these options!#}
+        {#                cache: false,#}
+        {#                contentType: false,#}
+        {#                processData: false,#}
+        {##}
+        {#                // Custom XMLHttpRequest#}
+        {#                xhr: function () {#}
+        {#                    var myXhr = $.ajaxSettings.xhr();#}
+        {#                    if (myXhr.upload) {#}
+        {#                        // For handling the progress of the upload#}
+        {#                        myXhr.upload.addEventListener('progress', function (e) {#}
+        {#                            if (e.lengthComputable) {#}
+        {#                                $('progress').attr({#}
+        {#                                    value: e.loaded,#}
+        {#                                    max: e.total,#}
+        {#                                });#}
+        {#                            }#}
+        {#                        }, false);#}
+        {#                    }#}
+        {#                    return myXhr;#}
+        {#                }#}
+        {#            });#}
+        {#        });#}
+        {##}
+        {##}
+    </script>
+    {##}
+{% endblock %}
+
+
+</html>

@@ -18,7 +18,12 @@ from django.urls import path, re_path, include
 from app import views
 from django.views.decorators.csrf import csrf_exempt
 
+# urlpatterns = [
+#     re_path('', csrf_exempt(views.surgePricingList.as_view({'put': 'update'}))),
+#     path('admin/', admin.site.urls),
+# ]
+
 urlpatterns = [
-    re_path('', csrf_exempt(views.surgePricingList.as_view())),
+    re_path('', include('app.urls')),
     path('admin/', admin.site.urls),
 ]
