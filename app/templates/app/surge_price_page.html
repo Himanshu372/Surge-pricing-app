@@ -14,14 +14,14 @@
     {#    <a href="/surge_price"></a>#}
     <p class="app"></p>
     <tr>
-        <td><label for="id_excel">Upload file and wait for magic</label></td>
+        <td><label for="id_excel">Upload file</label></td>
         {#            <td class="fileUpload btn" enctype="multipart/form-data">#}
         {#                <input type="file" name="excel" id="id_excel" class="upload"/>#}
         {#                <button type="submit" id='upload-btn'>Upload</button>#}
         {#            </td>#}
         <form enctype="multipart/form-data">
             <input type="file" id="id_excel">
-            <input type="button" id="upload_button" value="Upload!">
+            <input type="button" id="upload_button" value="Submit">
         </form>
         <div class="loader" id="loader" style="display: none"></div>
         <canvas id="line-chart" width="300" height="100"></canvas>
